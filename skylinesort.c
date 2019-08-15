@@ -9,9 +9,9 @@ void skylinesort(uint len, uint * v, uint * t, uint * a, uint * c){
   //i j indices
   //p position
   //m mask
-  for(i=len;i>0;--i){
+  for(i=len;i>0;i){
     //for(i=0;i<len;i++){
-    e=v[i];
+    e=v[--i];
     c[e]++;
     p=e;
     while(e>a[p]){
