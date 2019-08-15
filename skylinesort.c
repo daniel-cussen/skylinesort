@@ -39,6 +39,6 @@ void skylinesort(uint len, uint * v, uint * t, uint * a, uint * c){
     }
   }
   while(i>0)
-    t[--i]=0;//t[i--]? could be
+    t[--i]=0;
   c[0]=0;
 }
