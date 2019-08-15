@@ -1,0 +1,88 @@
+h1 {
+    color: #555;
+    font-face: Courier;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: bold;
+    height: 30px;
+}
+
+body {
+    background-color: #FFF;
+    overflow: hidden;
+    touch-action: none;
+}
+
+button, input, #header {
+    background-color: #FFF;
+    border-color: #444;
+    color: #555;
+    font-face: Courier;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: bold;
+    outline: none;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+}
+
+input::-moz-focus-inner {
+    border: 0;
+    color: #333;
+}
+
+#header {
+    font-weight: bolder;
+    font-style: normal;
+}
+
+#announce {
+    padding: 0px;
+    font-size: 24px;
+    margin: 10px 10px 10px 10px;
+    font-weight: bolder;
+}
+
+button, input {
+    text-decoration: none;
+    border-radius: 0px;
+    border: 2px solid #444;
+}
+
+button {
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 5px 5px 5px;
+    width: 160px;
+}
+
+button:hover {
+    background-color: #AAA;
+    color: #333;
+}
+
+button:focus {
+    background-color: #AAA;
+    color: #333;
+}
+
+input:hover {
+    background-color: #AAA;
+}
+
+input:hover::placeholder {
+    color: #333;
+    opacity: 1;
+}
+
+input:focus {
+    background-color: #AAA;
+    color: #333;
+}
+
+input:focus::placeholder {
+    color: #333;
+    opacity: 1;
+}
