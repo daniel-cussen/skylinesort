@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-08-24 Sat 15:30 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SKYLINESORT</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Blas Mena di Girolamo" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">SKYLINESORT</h1>
+
+<div id="outline-container-org816326b" class="outline-2">
+<h2 id="org816326b"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+My friend had a dancing frog in his computer.
+</p>
+
+<p>
+You know, as in One Froggy Evening:
+</p>
+
+
+<p>
+<a href="https://www.youtube.com/watch?v=6wd_6Y0wQOA">https://www.youtube.com/watch?v=6wd_6Y0wQOA</a>
+</p>
+
+
+<p>
+If the link doesn't work by the time you read this, I encourage you to search for it, it will become a valuable metaphore for you to use for the rest of your life.
+</p>
+
+<p>
+So, every time we met, Daniel talked to me about speed, bitwise operations and sorting algorithms. I program myself, but I didn't truly understand microprocessor instructions or how higuer level languages translated into assembly code. I still don't completely. He had a dancing, talking frog in his computer, but only he was able to see it. Until now.
+</p>
+
+<p>
+Before I start dissecting this frog I should make note that I'm not an expert biologist. This article and the code that comes with it it's the product of my enthusiasm for new fascinating topics. So use it a an introduction to sorting and skylinesort.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org35ef77c" class="outline-2">
+<h2 id="org35ef77c"><span class="section-number-2">2</span> Notes</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I'll be using the words "vector" and "array" interchangeably, they mean, in this context, the same thing. They are used too much, so this avoids some word repetition.
+</p>
+
+<p>
+The input array is the unsorted vector that enters our sorting algorithm.
+</p>
+
+<p>
+The output array is the sorted vector that exits our algorithm.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org37c7ac0" class="outline-2">
+<h2 id="org37c7ac0"><span class="section-number-2">3</span> Countingsort</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Countingsort is the algorithm that inspired skylinesort, so it makes sense to cover it first.
+</p>
+</div>
+
+<div id="outline-container-org3f4eb58" class="outline-3">
+<h3 id="org3f4eb58"><span class="section-number-3">3.1</span> General View</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+When we first think about sorting numbers, it's very hard to think of a method that doesn't involve, at some point, comparing numbers together: We take a number and we compare it with another, if it's bigger we put it to his right, if it's smaller we put it to his left.
+</p>
+
+<p>
+Countingsort is a very simple and beautiful idea: what if, instead of comparing numbers together multiple times to position them in the correct order, we position each number in the REAL place it belongs to in the number line, and then we just cut the blank space between them.
+</p>
+
+<p>
+This idea results very fast when the total span we use in the number line isn't very long. Cutting empty pieces of the number line can be expensive.
+</p>
+
+<p>
+When the numbers in an array are close together, nothing can beat countingsort.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd99c95f" class="outline-3">
+<h3 id="orgd99c95f"><span class="section-number-3">3.2</span> Details</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+To achieve what it does, countingsort uses what is called a counting array or counting vector. This is a vector as long as the range between the smallest possible value and the biggest possible value in the input array. Any number we take from the input array belongs to a place in the counting vector. This serves as our number line.
+</p>
+
+
+<div class="figure">
+<p><img src="1.jpg" alt="1.jpg" />
+</p>
+</div>
+
+<p>
+What we then do is, in each number (or position) of our number line (counting array) we store the amount of times that number appears in the input vector.
+</p>
+
+
+<div class="figure">
+<p><img src="2.jpg" alt="2.jpg" />
+</p>
+</div>
+
+<p>
+When this is done, we know how many of each element we have in the input vector. And, in a way, they are alredy sorted! They are just separated by a whole lot of 0s.
+</p>
+
+<p>
+The thing is the computer doesn't have this sort of top view of the whole vector. For it, the final order of the elements isn't obvious, so we have to find a step by step way to gather the numbers we placed in the number line.
+</p>
+
+<p>
+The solution is to travel the counting vector one element at a time, and each time we find a non-cero element we put that number of times the corresponding number in our output array. The problem with this solution is we are traveling the whole counting vector. A vector that is most likely full of 0s!
+</p>
+
+<p>
+What if we could just jump across the 0s in the counting array, going from one relevant position to the next? This is what skylinesort is about.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4902f6d" class="outline-2">
+<h2 id="org4902f6d"><span class="section-number-2">4</span> Skylinesort</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org3dd3cc3" class="outline-3">
+<h3 id="org3dd3cc3"><span class="section-number-3">4.1</span> General View</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+The whole approach of the algorithm is to try our best to avoid having to travel through the vast numbers of 0s that possibly populate the immense majority of our counting vector.
+</p>
+
+<p>
+To do this, we make some extra work during the first iteration over our input array. Just as in countingsort, for each element, we count its appearances in the counting vector, but we also place each number in certain positions in an auxiliary array. When we finish, we will travel this auxiliary array backwards using a method described later, making jumps as we go and finding every time the next element to be put into the output vector. This is the way skylinesort skips having to go through all the elements in the counting vector.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org55fda92" class="outline-3">
+<h3 id="org55fda92"><span class="section-number-3">4.2</span> Step by Step</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+I will start with a guide through every step of skylinesort. This will give you a good idea of how it works and why it works. After this, I will comment further on the steps involved.
+</p>
+
+<p>
+The first thing we do is to create a counting array and an auxiliary array. Every element in the input vector should have a unique place in our counting array and in our auxiliary array.
+</p>
+
+<p>
+The counting vector must be at least as big as the biggest number we can encounter in the input array, and the auxiliary vector must also be at least that big.
+</p>
+
+<p>
+Both this vectors will start being populated only by 0s.
+</p>
+
+
+<div class="figure">
+<p><img src="3.jpg" alt="3.jpg" /> 
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="4.jpg" alt="4.jpg" />
+</p>
+</div>
+
+<p>
+We start iterating over our input array. We take an element. We increase its count in the counting vector. Then we place the element in its position in the auxiliary array. So far, for the first element in the input vector we have this:
+</p>
+
+
+<div class="figure">
+<p><img src="5.jpg" alt="5.jpg" />
+</p>
+</div>
+
+<p>
+For the step that comes next we have to imagine a series of sticks
+over each position in the auxiliary vector. The details of the stick
+heights will be explained later.
+</p>
+
+
+<div class="figure">
+<p><img src="6.jpg" alt="6.jpg" />
+</p>
+</div>
+
+<p>
+We go to the position of the element we just placed in the
+auxiliary vector, and from the top of the stick in that position we
+draw a line going right. This line will come across another stick in a
+bigger position, if that position holds a number that's less than our
+current element, our element takes over that position, placing itself
+there. From the new position we draw a line from the top of the stick
+to the right, repeating this process until we either find a bigger
+element in another position or we reach the end of our auxiliary
+array.
+</p>
+
+<p>
+After this process we have the following:
+</p>
+
+
+<div class="figure">
+<p><img src="7.jpg" alt="7.jpg" />
+</p>
+</div>
+
+<p>
+We do this for the rest of the elements in the input array, each
+time increasing the element's count in the count vector and placing it
+in the corresponding places in the auxiliary vector.
+</p>
+
+<p>
+I encourage you to do the mental process for the next element in the
+input vector, which is 3.
+</p>
+
+<p>
+After we do this for every element in the input array we end up with
+this:
+</p>
+
+
+<div class="figure">
+<p><img src="8.jpg" alt="8.jpg" />
+</p>
+</div>
+
+<p>
+Now we have to build the output vector. We position ourselves at the
+last element of the auxiliary array. Because of the way we populated
+this array, this last element is the biggest number in the input
+array. So we place this element in the last position in our output
+vector, and then again to the left of it, as many times as the
+counting vector indicates for that element.
+</p>
+
+<p>
+Now comes the step that gives this algorithm its name. Because of the
+way we built the auxiliary array, we know that between the element we
+are working on and the position equal to that element, there are no
+other values in the auxiliary array except itself and 0s. So we go
+straight to the element's position. If we imagine we are making this
+jump traveling perpendicular from the top of the current stick to its
+left, we have drawn our first building in the skyline and jumped
+across a large portion of the number line!
+</p>
+
+
+<div class="figure">
+<p><img src="9.jpg" alt="9.jpg" />
+</p>
+</div>
+
+<p>
+From our current position in the auxiliary vector we go one step
+to the left. Do we encounter another non-cero element? If that is the
+case, we repeat the process just described, drawing our second
+building. Otherwise we keep traveling to the left until we are able to
+make another leap.
+</p>
+
+<p>
+We continue doing this process to find non-cero elements in the
+auxiliary array, until either we complete the output vector or we
+reach a point we know only zeroes are left to be put there (we can
+know this if the amount of spaces left to fill in the output vector is
+equal to the count at index 0 in the counting array).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6085464" class="outline-3">
+<h3 id="org6085464"><span class="section-number-3">4.3</span> Further Explanations</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+So we have seen skylinesort work. In general words we can describe it
+this way: Skylinesort is an integer sorting algorithm that uses a
+count vector to keep track of duplicates and an auxiliary vector to
+determine the relative positions of the elements in the input vector.
+</p>
+
+<p>
+The populating and traveling of the auxiliary vector is the part of
+the algorithm that deserves more explanation.
+</p>
+
+<p>
+You have seen the final step of the algorithm, when we start jumping
+backwards searching for elements. What defines this step is the
+ability to jump when we find an element to a position equal to that
+element. For this to be possible we have to make sure we are not
+skipping other elements when we jump, which is the same as to say that
+in the span we are jumping across there are no other elements but the
+number we found and zeroes.
+</p>
+
+<p>
+So the auxiliary vector must be constructed in such a way that every
+element in the input vector covers an uninterrupted span of territory
+(only that element and zeroes).
+</p>
+
+<p>
+For every element in the input vector we have to make some sort of
+process in which we have to populate elements to the right of its
+position until encountering a bigger number. If we simply visited
+every element to our right we would be losing the valuable oportunity
+of leaving some zeroes in-between. Leaving zeroes in-between though,
+means skipping places, places where other numbers might be alredy in
+place, and we can't allow other numbers to cover the span of our
+territory.
+</p>
+
+<p>
+This figure is used to explain how we can safely skip numbers:
+</p>
+
+
+<div class="figure">
+<p><img src="10.jpg" alt="10.jpg" />
+</p>
+</div>
+
+<p>
+If we take the number 2 from the input vector, we place it at
+position 2. Then we check elements to the right of it. In this case we
+have to check only place 3. We place a 2 there if 2 is bigger than the
+number alredy there.
+</p>
+
+<p>
+Let's say then we take number 1 from the input vector. We could check
+place two and, if no element is found, check place three next, but
+it's not necessary, we can skip directly to checking place 3. This is
+because we know only one of three possible situations can happen, and
+all three of them ensure us uniterrupted territories:
+</p>
+
+<p>
+1 - Possibility one is there will never be a number 2 in our input
+vector, so no need to check position 2 in this case.  2 - Possibility
+two is there is a number 2 in our input vector that hasn't come out
+yet. We skip place two for now and place a 1 on place three. When the
+2 comes out, it will take its place and override place 3, so
+everything will remain in order.  3 - Possibility three is number 2
+has alredy appeared, and has alredy taken place three. From number 1
+we check place 3, we see a two there, so we do nothing, we know we
+have a two in front of us that has taken place three so we have no
+more territory to cover.
+</p>
+
+<p>
+Here is a copy of the previous figure to illustrate the next
+paragraph:
+</p>
+
+
+<div class="figure">
+<p><img src="10.jpg" alt="10.jpg" />
+</p>
+</div>
+
+<p>
+Finally, lets say we take a 0 from the input vector. In this case
+we have nothing to check, since 0 has alredy all the board
+covered. But, if it were a relevant number, we would only have to
+check place 1 and, if no element is found, check only place 3
+next. This is the reasoning in two steps: 1 - We check place 1, if we
+find a 1 there, we stop, its bigger than us.  2 - If there is a 0 in
+place 1, then we follow the reasoning discussed before: we can go from
+place 1 directly to place 3 since the number 2 will override place 3
+if it were to appear.
+</p>
+
+<p>
+Now, why use this stick lengths and no others? I'm afraid I can only
+give you a hint on this, since I find it intriguing too. I have only a
+part of the answer: We can use simple, fast bitwise operations to
+reach this positions. For a position 'p', the next position to check
+is (p | (p + 1)). The jumping process in this algorithm will be
+repeated many, many times during the algorithm, so it better be damn
+fast. And it is.
+</p>
+
+<p>
+In short, we put elements in the auxiliary vector by first placing
+them in an index equal to themselves and then populating elements to
+their right until encountering a bigger number. Repeating this process
+for every input element gives us an auxiliary array in which every
+element in the input vector covers a span of territory. With "span of
+territory" I mean each element covers an uninterrupted zone that
+contains only copies of himself and zeroes.
+</p>
+
+<p>
+Finally, the backward travel process works because we ensured
+uninterrupted territories during forward travel. We know if we find a
+15 in a position, there are only 15s and 0s between that position and
+position 15, so we can jump safely to position 15.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a30bf4" class="outline-2">
+<h2 id="org0a30bf4"><span class="section-number-2">5</span> So, does it perform?</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Yes, it does. It wins at least half the time against other staple
+algorithms like quicksort and bitwise-radixsort. The other half is
+very close.
+</p>
+
+<p>
+Accompanying this article should be some C# code that handles
+comparisons between different algorithms, including a mixture of
+skylinesort with radixsort that is surprisingly fast. Give it a try so
+you can see for yourself. You can check the code if you have doubts
+about the algorithms implementation. If you find a mistake or an
+optimization to make to an algorithm in the list then please fix it
+and compare it with skyline and skyline-radix.
+</p>
+
+<p>
+I chose to write the code in C# because I work making games in the
+Unity engine, so I feel most comfortable with this laguage.
+</p>
+
+<p>
+Finally, I must inform you my friend Daniel has recently finished a
+faster version of skyline sort which he calls cutsort. This dancing
+frog promises to forever obscure the existence of Michael
+Jackson. This is very exciting news for me, and I hope also for you. I
+hope he is willing to share it as he did with skyline. If he
+eventually does, I will make a similar article with the details.
+</p>
+
+<p>
+Thank you a lot for reading. Have a great day.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Blas Mena di Girolamo</p>
+<p class="date">Created: 2019-08-24 Sat 15:30</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
