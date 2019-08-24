@@ -54,7 +54,7 @@ button, input {
 button {
     text-align: center;
     padding: 10px 10px 10px 10px;
-    margin: 5px 5px 5px 5px;
+    margin: 0px 5px 5px 5px;
     width: 160px;
 }
 
@@ -85,4 +85,10 @@ input:focus {
 input:focus::placeholder {
     color: #333;
     opacity: 1;
+}
+
+#external_links {
+    font-face: Courier;
+    font-size: 18px;
+    font-weight: bolder;
 }
