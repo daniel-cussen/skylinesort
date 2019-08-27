@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-24 Sat 15:30 -->
+<!-- 2019-08-27 Tue 15:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SKYLINESORT</title>
+<title>Skylinesort, explained</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Blas Mena di Girolamo" />
 <style type="text/css">
@@ -242,10 +242,10 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">SKYLINESORT</h1>
+<h1 class="title">Skylinesort, explained</h1>
 
-<div id="outline-container-org816326b" class="outline-2">
-<h2 id="org816326b"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org2e8c890" class="outline-2">
+<h2 id="org2e8c890"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 My friend had a dancing frog in his computer.
@@ -262,29 +262,42 @@ You know, as in One Froggy Evening:
 
 
 <p>
-If the link doesn't work by the time you read this, I encourage you to search for it, it will become a valuable metaphore for you to use for the rest of your life.
+If the link doesn't work by the time you read this, I encourage you to
+search for it, it will become a valuable metaphor for you to use for
+the rest of your life.
 </p>
 
 <p>
-So, every time we met, Daniel talked to me about speed, bitwise operations and sorting algorithms. I program myself, but I didn't truly understand microprocessor instructions or how higuer level languages translated into assembly code. I still don't completely. He had a dancing, talking frog in his computer, but only he was able to see it. Until now.
+So, every time we met, Daniel talked to me about speed, bit-wise
+operations and sorting algorithms. I program myself, but I didn't
+truly understand microprocessor instructions or how higher level
+languages translated into assembly code. I still don't completely. He
+had a dancing, talking frog in his computer, but only he was able to
+see it. Until now.
 </p>
 
 <p>
-Before I start dissecting this frog I should make note that I'm not an expert biologist. This article and the code that comes with it it's the product of my enthusiasm for new fascinating topics. So use it a an introduction to sorting and skylinesort.
+Before I start dissecting this frog I should make note that I'm not an
+expert biologist. This article and the code that comes with it it's
+the product of my enthusiasm for new fascinating topics. So use it a
+an introduction to sorting and skylinesort.
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-org35ef77c" class="outline-2">
-<h2 id="org35ef77c"><span class="section-number-2">2</span> Notes</h2>
+<div id="outline-container-org92582e3" class="outline-2">
+<h2 id="org92582e3"><span class="section-number-2">2</span> Notes</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-I'll be using the words "vector" and "array" interchangeably, they mean, in this context, the same thing. They are used too much, so this avoids some word repetition.
+I'll be using the words "vector" and "array" interchangeably, they
+mean, in this context, the same thing. They are used too much, so this
+avoids some word repetition.
 </p>
 
 <p>
-The input array is the unsorted vector that enters our sorting algorithm.
+The input array is the unsorted vector that enters our sorting
+algorithm.
 </p>
 
 <p>
@@ -294,40 +307,54 @@ The output array is the sorted vector that exits our algorithm.
 </div>
 
 
-<div id="outline-container-org37c7ac0" class="outline-2">
-<h2 id="org37c7ac0"><span class="section-number-2">3</span> Countingsort</h2>
+<div id="outline-container-org44fce4a" class="outline-2">
+<h2 id="org44fce4a"><span class="section-number-2">3</span> Counting sort</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-Countingsort is the algorithm that inspired skylinesort, so it makes sense to cover it first.
+Counting sort is the algorithm that inspired skylinesort, so it makes
+sense to cover it first.
 </p>
 </div>
 
-<div id="outline-container-org3f4eb58" class="outline-3">
-<h3 id="org3f4eb58"><span class="section-number-3">3.1</span> General View</h3>
+<div id="outline-container-orgd2d6a21" class="outline-3">
+<h3 id="orgd2d6a21"><span class="section-number-3">3.1</span> General View</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-When we first think about sorting numbers, it's very hard to think of a method that doesn't involve, at some point, comparing numbers together: We take a number and we compare it with another, if it's bigger we put it to his right, if it's smaller we put it to his left.
+When we first think about sorting numbers, it's very hard to think of
+a method that doesn't involve, at some point, comparing numbers
+together: We take a number and we compare it with another, if it's
+bigger we put it to his right, if it's smaller we put it to his left.
 </p>
 
 <p>
-Countingsort is a very simple and beautiful idea: what if, instead of comparing numbers together multiple times to position them in the correct order, we position each number in the REAL place it belongs to in the number line, and then we just cut the blank space between them.
+Counting sort is a very simple and beautiful idea: what if, instead of
+comparing numbers together multiple times to position them in the
+correct order, we position each number in the REAL place it belongs to
+in the number line, and then we just cut the blank space between them.
 </p>
 
 <p>
-This idea results very fast when the total span we use in the number line isn't very long. Cutting empty pieces of the number line can be expensive.
+This idea results very fast when the total span we use in the number
+line isn't very long. Cutting empty pieces of the number line can be
+expensive.
 </p>
 
 <p>
-When the numbers in an array are close together, nothing can beat countingsort.
+When the numbers in an array are close together, nothing can beat
+counting sort.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd99c95f" class="outline-3">
-<h3 id="orgd99c95f"><span class="section-number-3">3.2</span> Details</h3>
+<div id="outline-container-orgb270e14" class="outline-3">
+<h3 id="orgb270e14"><span class="section-number-3">3.2</span> Details</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-To achieve what it does, countingsort uses what is called a counting array or counting vector. This is a vector as long as the range between the smallest possible value and the biggest possible value in the input array. Any number we take from the input array belongs to a place in the counting vector. This serves as our number line.
+To achieve what it does, counting sort uses what is called a counting
+array or counting vector. This is a vector as long as the range
+between the smallest possible value and the biggest possible value in
+the input array. Any number we take from the input array belongs to a
+place in the counting vector. This serves as our number line.
 </p>
 
 
@@ -337,7 +364,9 @@ To achieve what it does, countingsort uses what is called a counting array or co
 </div>
 
 <p>
-What we then do is, in each number (or position) of our number line (counting array) we store the amount of times that number appears in the input vector.
+What we then do is, in each number (or position) of our number line
+(counting array) we store the amount of times that number appears in
+the input vector.
 </p>
 
 
@@ -347,54 +376,80 @@ What we then do is, in each number (or position) of our number line (counting ar
 </div>
 
 <p>
-When this is done, we know how many of each element we have in the input vector. And, in a way, they are alredy sorted! They are just separated by a whole lot of 0s.
+When this is done, we know how many of each element we have in the
+input vector. And, in a way, they are already sorted! They are just
+separated by a whole lot of 0s.
 </p>
 
 <p>
-The thing is the computer doesn't have this sort of top view of the whole vector. For it, the final order of the elements isn't obvious, so we have to find a step by step way to gather the numbers we placed in the number line.
+The thing is the computer doesn't have this sort of top view of the
+whole vector. For it, the final order of the elements isn't obvious,
+so we have to find a step by step way to gather the numbers we placed
+in the number line.
 </p>
 
 <p>
-The solution is to travel the counting vector one element at a time, and each time we find a non-cero element we put that number of times the corresponding number in our output array. The problem with this solution is we are traveling the whole counting vector. A vector that is most likely full of 0s!
+The solution is to travel the counting vector one element at a time,
+and each time we find a non-zero element we put that number of times
+the corresponding number in our output array. The problem with this
+solution is we are traveling the whole counting vector. A vector that
+is most likely full of 0s!
 </p>
 
 <p>
-What if we could just jump across the 0s in the counting array, going from one relevant position to the next? This is what skylinesort is about.
+What if we could just jump across the 0s in the counting array, going
+from one relevant position to the next? This is what skylinesort is
+about.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4902f6d" class="outline-2">
-<h2 id="org4902f6d"><span class="section-number-2">4</span> Skylinesort</h2>
+<div id="outline-container-orgbfca8ca" class="outline-2">
+<h2 id="orgbfca8ca"><span class="section-number-2">4</span> Skylinesort</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org3dd3cc3" class="outline-3">
-<h3 id="org3dd3cc3"><span class="section-number-3">4.1</span> General View</h3>
+<div id="outline-container-org7de7c3b" class="outline-3">
+<h3 id="org7de7c3b"><span class="section-number-3">4.1</span> General View</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
-The whole approach of the algorithm is to try our best to avoid having to travel through the vast numbers of 0s that possibly populate the immense majority of our counting vector.
+The whole approach of the algorithm is to try our best to avoid having
+to travel through the vast numbers of 0s that possibly populate the
+immense majority of our counting vector.
 </p>
 
 <p>
-To do this, we make some extra work during the first iteration over our input array. Just as in countingsort, for each element, we count its appearances in the counting vector, but we also place each number in certain positions in an auxiliary array. When we finish, we will travel this auxiliary array backwards using a method described later, making jumps as we go and finding every time the next element to be put into the output vector. This is the way skylinesort skips having to go through all the elements in the counting vector.
+To do this, we make some extra work during the first iteration over
+our input array. Just as in counting sort, for each element, we count
+its appearances in the counting vector, but we also place each number
+in certain positions in an auxiliary array. When we finish, we will
+travel this auxiliary array backwards using a method described later,
+making jumps as we go and finding every time the next element to be
+put into the output vector. This is the way skyline sort skips having
+to go through all the elements in the counting vector.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org55fda92" class="outline-3">
-<h3 id="org55fda92"><span class="section-number-3">4.2</span> Step by Step</h3>
+<div id="outline-container-orgb6d146b" class="outline-3">
+<h3 id="orgb6d146b"><span class="section-number-3">4.2</span> Step by Step</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
-I will start with a guide through every step of skylinesort. This will give you a good idea of how it works and why it works. After this, I will comment further on the steps involved.
+I will start with a guide through every step of skylinesort. This will
+give you a good idea of how it works and why it works. After this, I
+will comment further on the steps involved.
 </p>
 
 <p>
-The first thing we do is to create a counting array and an auxiliary array. Every element in the input vector should have a unique place in our counting array and in our auxiliary array.
+The first thing we do is to create a counting array and an auxiliary
+array. Every element in the input vector should have a unique place in
+our counting array and in our auxiliary array.
 </p>
 
 <p>
-The counting vector must be at least as big as the biggest number we can encounter in the input array, and the auxiliary vector must also be at least that big.
+The counting vector must be at least as big as the biggest number we
+can encounter in the input array, and the auxiliary vector must also
+be at least that big.
 </p>
 
 <p>
@@ -403,7 +458,7 @@ Both this vectors will start being populated only by 0s.
 
 
 <div class="figure">
-<p><img src="3.jpg" alt="3.jpg" /> 
+<p><img src="3.jpg" alt="3.jpg" />
 </p>
 </div>
 
@@ -414,7 +469,10 @@ Both this vectors will start being populated only by 0s.
 </div>
 
 <p>
-We start iterating over our input array. We take an element. We increase its count in the counting vector. Then we place the element in its position in the auxiliary array. So far, for the first element in the input vector we have this:
+We start iterating over our input array. We take an element. We
+increase its count in the counting vector. Then we place the element
+in its position in the auxiliary array. So far, for the first element
+in the input vector we have this:
 </p>
 
 
@@ -436,11 +494,11 @@ heights will be explained later.
 </div>
 
 <p>
-We go to the position of the element we just placed in the
-auxiliary vector, and from the top of the stick in that position we
-draw a line going right. This line will come across another stick in a
-bigger position, if that position holds a number that's less than our
-current element, our element takes over that position, placing itself
+We go to the position of the element we just placed in the auxiliary
+vector, and from the top of the stick in that position we draw a line
+going right. This line will come across another stick in a bigger
+position, if that position holds a number that's less than our current
+element, our element takes over that position, placing itself
 there. From the new position we draw a line from the top of the stick
 to the right, repeating this process until we either find a bigger
 element in another position or we reach the end of our auxiliary
@@ -458,9 +516,9 @@ After this process we have the following:
 </div>
 
 <p>
-We do this for the rest of the elements in the input array, each
-time increasing the element's count in the count vector and placing it
-in the corresponding places in the auxiliary vector.
+We do this for the rest of the elements in the input array, each time
+increasing the element's count in the count vector and placing it in
+the corresponding places in the auxiliary vector.
 </p>
 
 <p>
@@ -506,15 +564,15 @@ across a large portion of the number line!
 </div>
 
 <p>
-From our current position in the auxiliary vector we go one step
-to the left. Do we encounter another non-cero element? If that is the
+From our current position in the auxiliary vector we go one step to
+the left. Do we encounter another non-zero element? If that is the
 case, we repeat the process just described, drawing our second
 building. Otherwise we keep traveling to the left until we are able to
 make another leap.
 </p>
 
 <p>
-We continue doing this process to find non-cero elements in the
+We continue doing this process to find non-zero elements in the
 auxiliary array, until either we complete the output vector or we
 reach a point we know only zeroes are left to be put there (we can
 know this if the amount of spaces left to fill in the output vector is
@@ -523,8 +581,8 @@ equal to the count at index 0 in the counting array).
 </div>
 </div>
 
-<div id="outline-container-org6085464" class="outline-3">
-<h3 id="org6085464"><span class="section-number-3">4.3</span> Further Explanations</h3>
+<div id="outline-container-orga7466ff" class="outline-3">
+<h3 id="orga7466ff"><span class="section-number-3">4.3</span> Further Explanations</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 So we have seen skylinesort work. In general words we can describe it
@@ -558,9 +616,9 @@ element in the input vector covers an uninterrupted span of territory
 For every element in the input vector we have to make some sort of
 process in which we have to populate elements to the right of its
 position until encountering a bigger number. If we simply visited
-every element to our right we would be losing the valuable oportunity
+every element to our right we would be losing the valuable opportunity
 of leaving some zeroes in-between. Leaving zeroes in-between though,
-means skipping places, places where other numbers might be alredy in
+means skipping places, places where other numbers might be already in
 place, and we can't allow other numbers to cover the span of our
 territory.
 </p>
@@ -579,7 +637,7 @@ This figure is used to explain how we can safely skip numbers:
 If we take the number 2 from the input vector, we place it at
 position 2. Then we check elements to the right of it. In this case we
 have to check only place 3. We place a 2 there if 2 is bigger than the
-number alredy there.
+number already there.
 </p>
 
 <p>
@@ -587,7 +645,7 @@ Let's say then we take number 1 from the input vector. We could check
 place two and, if no element is found, check place three next, but
 it's not necessary, we can skip directly to checking place 3. This is
 because we know only one of three possible situations can happen, and
-all three of them ensure us uniterrupted territories:
+all three of them ensure us uninterrupted territories:
 </p>
 
 <p>
@@ -597,7 +655,7 @@ two is there is a number 2 in our input vector that hasn't come out
 yet. We skip place two for now and place a 1 on place three. When the
 2 comes out, it will take its place and override place 3, so
 everything will remain in order.  3 - Possibility three is number 2
-has alredy appeared, and has alredy taken place three. From number 1
+has already appeared, and has already taken place three. From number 1
 we check place 3, we see a two there, so we do nothing, we know we
 have a two in front of us that has taken place three so we have no
 more territory to cover.
@@ -615,15 +673,14 @@ paragraph:
 </div>
 
 <p>
-Finally, lets say we take a 0 from the input vector. In this case
-we have nothing to check, since 0 has alredy all the board
-covered. But, if it were a relevant number, we would only have to
-check place 1 and, if no element is found, check only place 3
-next. This is the reasoning in two steps: 1 - We check place 1, if we
-find a 1 there, we stop, its bigger than us.  2 - If there is a 0 in
-place 1, then we follow the reasoning discussed before: we can go from
-place 1 directly to place 3 since the number 2 will override place 3
-if it were to appear.
+Finally, lets say we take a 0 from the input vector. In this case we
+have nothing to check, since 0 has already all the board covered. But,
+if it were a relevant number, we would only have to check place 1 and,
+if no element is found, check only place 3 next. This is the reasoning
+in two steps: 1 - We check place 1, if we find a 1 there, we stop, its
+bigger than us.  2 - If there is a 0 in place 1, then we follow the
+reasoning discussed before: we can go from place 1 directly to place 3
+since the number 2 will override place 3 if it were to appear.
 </p>
 
 <p>
@@ -656,8 +713,8 @@ position 15, so we can jump safely to position 15.
 </div>
 </div>
 
-<div id="outline-container-org0a30bf4" class="outline-2">
-<h2 id="org0a30bf4"><span class="section-number-2">5</span> So, does it perform?</h2>
+<div id="outline-container-org7fc35bc" class="outline-2">
+<h2 id="org7fc35bc"><span class="section-number-2">5</span> So, does it perform?</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Yes, it does. It wins at least half the time against other staple
@@ -677,16 +734,16 @@ and compare it with skyline and skyline-radix.
 
 <p>
 I chose to write the code in C# because I work making games in the
-Unity engine, so I feel most comfortable with this laguage.
+Unity engine, so I feel most comfortable with this language.
 </p>
 
 <p>
 Finally, I must inform you my friend Daniel has recently finished a
-faster version of skyline sort which he calls cutsort. This dancing
+faster version of skyline sort which he calls catsort. This dancing
 frog promises to forever obscure the existence of Michael
 Jackson. This is very exciting news for me, and I hope also for you. I
 hope he is willing to share it as he did with skyline. If he
-eventually does, I will make a similar article with the details.
+eventually does, I will make another, similar article with the details.
 </p>
 
 <p>
@@ -697,7 +754,7 @@ Thank you a lot for reading. Have a great day.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Blas Mena di Girolamo</p>
-<p class="date">Created: 2019-08-24 Sat 15:30</p>
+<p class="date">Created: 2019-08-27 Tue 15:44</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
