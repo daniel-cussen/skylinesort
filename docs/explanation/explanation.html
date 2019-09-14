@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-27 Tue 15:44 -->
+<!-- 2019-08-29 Thu 09:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Skylinesort, explained</title>
@@ -244,22 +244,20 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Skylinesort, explained</h1>
 
-<div id="outline-container-org2e8c890" class="outline-2">
-<h2 id="org2e8c890"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org61d751c" class="outline-2">
+<h2 id="org61d751c"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-My friend had a dancing frog in his computer.
+My friend had a dancing frog on his computer.
 </p>
 
 <p>
 You know, as in One Froggy Evening:
 </p>
 
-
 <p>
 <a href="https://www.youtube.com/watch?v=6wd_6Y0wQOA">https://www.youtube.com/watch?v=6wd_6Y0wQOA</a>
 </p>
-
 
 <p>
 If the link doesn't work by the time you read this, I encourage you to
@@ -268,12 +266,12 @@ the rest of your life.
 </p>
 
 <p>
-So, every time we met, Daniel talked to me about speed, bit-wise
+So, every time we met, Daniel talked to me about speed, bitwise
 operations and sorting algorithms. I program myself, but I didn't
 truly understand microprocessor instructions or how higher level
-languages translated into assembly code. I still don't completely. He
-had a dancing, talking frog in his computer, but only he was able to
-see it. Until now.
+languages were translated into assembly code. I still don't
+completely. He had a dancing, talking frog in his computer, but only
+he was able to see it. Until now.
 </p>
 
 <p>
@@ -285,9 +283,8 @@ an introduction to sorting and skylinesort.
 </div>
 </div>
 
-
-<div id="outline-container-org92582e3" class="outline-2">
-<h2 id="org92582e3"><span class="section-number-2">2</span> Notes</h2>
+<div id="outline-container-org25539d4" class="outline-2">
+<h2 id="org25539d4"><span class="section-number-2">2</span> Notes</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I'll be using the words "vector" and "array" interchangeably, they
@@ -307,8 +304,8 @@ The output array is the sorted vector that exits our algorithm.
 </div>
 
 
-<div id="outline-container-org44fce4a" class="outline-2">
-<h2 id="org44fce4a"><span class="section-number-2">3</span> Counting sort</h2>
+<div id="outline-container-org0376288" class="outline-2">
+<h2 id="org0376288"><span class="section-number-2">3</span> Counting sort</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Counting sort is the algorithm that inspired skylinesort, so it makes
@@ -316,14 +313,14 @@ sense to cover it first.
 </p>
 </div>
 
-<div id="outline-container-orgd2d6a21" class="outline-3">
-<h3 id="orgd2d6a21"><span class="section-number-3">3.1</span> General View</h3>
+<div id="outline-container-orgeed4890" class="outline-3">
+<h3 id="orgeed4890"><span class="section-number-3">3.1</span> General View</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 When we first think about sorting numbers, it's very hard to think of
 a method that doesn't involve, at some point, comparing numbers
 together: We take a number and we compare it with another, if it's
-bigger we put it to his right, if it's smaller we put it to his left.
+bigger we put it to its right, if it's smaller we put it to its left.
 </p>
 
 <p>
@@ -346,15 +343,15 @@ counting sort.
 </div>
 </div>
 
-<div id="outline-container-orgb270e14" class="outline-3">
-<h3 id="orgb270e14"><span class="section-number-3">3.2</span> Details</h3>
+<div id="outline-container-orgd65e981" class="outline-3">
+<h3 id="orgd65e981"><span class="section-number-3">3.2</span> Details</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 To achieve what it does, counting sort uses what is called a counting
-array or counting vector. This is a vector as long as the range
-between the smallest possible value and the biggest possible value in
-the input array. Any number we take from the input array belongs to a
-place in the counting vector. This serves as our number line.
+array. This is a vector as long as the range between the smallest
+possible value and the largest possible value in the input array. Any
+number we take from the input array belongs to a place in the counting
+vector. This serves as our number line.
 </p>
 
 
@@ -378,7 +375,7 @@ the input vector.
 <p>
 When this is done, we know how many of each element we have in the
 input vector. And, in a way, they are already sorted! They are just
-separated by a whole lot of 0s.
+separated by a whole lot of zeroes.
 </p>
 
 <p>
@@ -392,25 +389,25 @@ in the number line.
 The solution is to travel the counting vector one element at a time,
 and each time we find a non-zero element we put that number of times
 the corresponding number in our output array. The problem with this
-solution is we are traveling the whole counting vector. A vector that
-is most likely full of 0s!
+solution is we are traversing the whole counting vector. A vector that
+is most likely full of zeroes!
 </p>
 
 <p>
-What if we could just jump across the 0s in the counting array, going
-from one relevant position to the next? This is what skylinesort is
-about.
+What if we could just jump across the zeroes in the counting array,
+going from one relevant position to the next? This is what skylinesort
+is about.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbfca8ca" class="outline-2">
-<h2 id="orgbfca8ca"><span class="section-number-2">4</span> Skylinesort</h2>
+<div id="outline-container-org31260ec" class="outline-2">
+<h2 id="org31260ec"><span class="section-number-2">4</span> Skylinesort</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org7de7c3b" class="outline-3">
-<h3 id="org7de7c3b"><span class="section-number-3">4.1</span> General View</h3>
+<div id="outline-container-org43949bd" class="outline-3">
+<h3 id="org43949bd"><span class="section-number-3">4.1</span> General View</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 The whole approach of the algorithm is to try our best to avoid having
@@ -423,16 +420,16 @@ To do this, we make some extra work during the first iteration over
 our input array. Just as in counting sort, for each element, we count
 its appearances in the counting vector, but we also place each number
 in certain positions in an auxiliary array. When we finish, we will
-travel this auxiliary array backwards using a method described later,
-making jumps as we go and finding every time the next element to be
-put into the output vector. This is the way skyline sort skips having
-to go through all the elements in the counting vector.
+travel through this auxiliary array backwards using a method described
+later, making jumps as we go and finding every time the next element
+to be put into the output vector. This is the way skyline sort skips
+having to go through all the elements in the counting vector.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb6d146b" class="outline-3">
-<h3 id="orgb6d146b"><span class="section-number-3">4.2</span> Step by Step</h3>
+<div id="outline-container-orgf900611" class="outline-3">
+<h3 id="orgf900611"><span class="section-number-3">4.2</span> Step by Step</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 I will start with a guide through every step of skylinesort. This will
@@ -453,7 +450,7 @@ be at least that big.
 </p>
 
 <p>
-Both this vectors will start being populated only by 0s.
+Both this vectors will start being populated only by zeroes.
 </p>
 
 
@@ -550,7 +547,7 @@ counting vector indicates for that element.
 Now comes the step that gives this algorithm its name. Because of the
 way we built the auxiliary array, we know that between the element we
 are working on and the position equal to that element, there are no
-other values in the auxiliary array except itself and 0s. So we go
+other values in the auxiliary array except itself and zeroes. So we go
 straight to the element's position. If we imagine we are making this
 jump traveling perpendicular from the top of the current stick to its
 left, we have drawn our first building in the skyline and jumped
@@ -581,8 +578,8 @@ equal to the count at index 0 in the counting array).
 </div>
 </div>
 
-<div id="outline-container-orga7466ff" class="outline-3">
-<h3 id="orga7466ff"><span class="section-number-3">4.3</span> Further Explanations</h3>
+<div id="outline-container-org073bab1" class="outline-3">
+<h3 id="org073bab1"><span class="section-number-3">4.3</span> Further Explanations</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 So we have seen skylinesort work. In general words we can describe it
@@ -645,7 +642,7 @@ Let's say then we take number 1 from the input vector. We could check
 place two and, if no element is found, check place three next, but
 it's not necessary, we can skip directly to checking place 3. This is
 because we know only one of three possible situations can happen, and
-all three of them ensure us uninterrupted territories:
+all three of them ensure uninterrupted territories:
 </p>
 
 <p>
@@ -678,9 +675,10 @@ have nothing to check, since 0 has already all the board covered. But,
 if it were a relevant number, we would only have to check place 1 and,
 if no element is found, check only place 3 next. This is the reasoning
 in two steps: 1 - We check place 1, if we find a 1 there, we stop, its
-bigger than us.  2 - If there is a 0 in place 1, then we follow the
-reasoning discussed before: we can go from place 1 directly to place 3
-since the number 2 will override place 3 if it were to appear.
+bigger than the zero we are inserting.  2 - If there is a 0 in place
+1, then we follow the reasoning discussed before: we can go from place
+1 directly to place 3 since the number 2 will override place 3 if it
+were to appear.
 </p>
 
 <p>
@@ -706,20 +704,20 @@ contains only copies of himself and zeroes.
 <p>
 Finally, the backward travel process works because we ensured
 uninterrupted territories during forward travel. We know if we find a
-15 in a position, there are only 15s and 0s between that position and
+15 in a position, there are only 15s and zeroes between that position and
 position 15, so we can jump safely to position 15.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7fc35bc" class="outline-2">
-<h2 id="org7fc35bc"><span class="section-number-2">5</span> So, does it perform?</h2>
+<div id="outline-container-orgcd449c1" class="outline-2">
+<h2 id="orgcd449c1"><span class="section-number-2">5</span> So, does it perform?</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-Yes, it does. It wins at least half the time against other staple
-algorithms like quicksort and bitwise-radixsort. The other half is
-very close.
+Yes, it does. It is faster at least half the situations against other
+staple algorithms like quicksort and bitwise-radixsort. The remaining
+half is very close.
 </p>
 
 <p>
@@ -754,7 +752,7 @@ Thank you a lot for reading. Have a great day.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Blas Mena di Girolamo</p>
-<p class="date">Created: 2019-08-27 Tue 15:44</p>
+<p class="date">Created: 2019-08-29 Thu 09:37</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
