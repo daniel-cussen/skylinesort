@@ -60,7 +60,7 @@ var pos, elt;
 var vec_index = 0;
 var stack = [];
 
-var animation_speed=120;
+var animation_speed=400;
 var phase = startScatter;
 var stage = "unstarted";
 
